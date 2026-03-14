@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #00d4ff; /* Nitrous */
+  --secondary: #ff4d00; /* Signal */
+  --accent: #ff003c; /* Racing Red */
+  --background: #0d0d0f; /* Deep Asphalt */
+  --surface: #16161a;
+  --card: #1c1c21;
+  --hover: #25252b;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+}
+
+.light {
+  --background: #f4f4f5;
+  --surface: #ffffff;
+  --card: #e4e4e7;
+  --hover: #d4d4d8;
+  --text-primary: #09090b;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(13, 13, 15, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 212, 255, 0.1);
+  }
+  
+  .glass-light {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 212, 255, 0.1);
+  }
+  
+  .neon-border {
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2), 0 0 20px rgba(255, 77, 0, 0.1);
+  }
+  
+  .neon-border-hover:hover {
+    border-color: rgba(0, 212, 255, 0.6);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4), 0 0 40px rgba(255, 77, 0, 0.2);
+  }
+}
