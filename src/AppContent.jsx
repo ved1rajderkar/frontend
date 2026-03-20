@@ -14,6 +14,9 @@ import PageNotFound from "./pages/PageNotFound";
 import PeopleInfoPage from "./pages/PeopleInfoPage";
 import CharacterInfoPage from "./pages/CharacterInfoPage";
 import CharactersPage from "./pages/CharactersPage";
+import AuthModal from "./components/AuthModal";
+import useAuthStore from "./store/authStore";
+import { useEffect } from "react";
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -32,10 +35,16 @@ const AppContent = () => {
   const togglesidebar = useSidebarStore((state) => state.toggleSidebar);
   const location = useLocation();
   const path = location.pathname === "/";
+  const initAuth = useAuthStore((state) => state.init);
+
+  useEffect(() => {
+    initAuth();
+  }, [initAuth]);
 
   return (
     <>
       {!path && <Sidebar />}
+      <AuthModal />
 
       <main className={`${isSidebarOpen ? "bg-active" : ""} opacityWrapper`}>
         <div

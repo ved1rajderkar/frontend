@@ -6,10 +6,14 @@ import { useApi } from "../services/useApi";
 import Logo from "./Logo";
 import useSidebarStore from "../store/sidebarStore";
 import Loader from "./Loader";
+import useAuthStore from "../store/authStore";
+import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 
 const Header = () => {
   const sidebarHandler = useSidebarStore((state) => state.toggleSidebar);
+  const { user, toggleModal, logout } = useAuthStore();
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const [value, setValue] = useState("");
   const [debouncedValue, setDebouncedValue] = useState(""); // For debouncing
   const timeoutRef = useRef(null);
@@ -78,6 +82,46 @@ const Header = () => {
             >
               {showSearchBar ? <FaXmark /> : <FaSearch />}
             </button>
+
+            {user ? (
+              <div className="relative">
+                <button
+                  onClick={() => setShowUserMenu(!showUserMenu)}
+                  className="flex items-center gap-2 hover:text-primary transition-colors p-2"
+                >
+                  {user.photoURL ? (
+                    <img src={user.photoURL} alt="User" className="w-8 h-8 rounded-full border border-primary/50" />
+                  ) : (
+                    <FaUserCircle size={25} />
+                  )}
+                </button>
+                {showUserMenu && (
+                  <div className="absolute right-0 mt-2 w-48 glass rounded-2xl border border-violet-500/20 shadow-xl py-2 z-50 overflow-hidden">
+                    <div className="px-4 py-2 border-b border-violet-500/10">
+                      <p className="text-sm font-semibold truncate text-white">{user.displayName || "User"}</p>
+                      <p className="text-xs text-gray-400 truncate">{user.email}</p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setShowUserMenu(false);
+                      }}
+                      className="w-full flex items-center gap-2 px-4 py-2 text-sm hover:bg-violet-500/10 transition-colors text-red-400"
+                    >
+                      <FaSignOutAlt />
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                onClick={toggleModal}
+                className="bg-primary/20 hover:bg-primary/30 border border-primary/50 px-5 py-2 rounded-full text-sm font-semibold transition-all hover:scale-105 active:scale-95"
+              >
+                Login
+              </button>
+            )}
           </div>
         </div>
         <form
